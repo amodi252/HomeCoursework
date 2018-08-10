@@ -1,0 +1,70 @@
+body {
+  padding-top: 80px;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 688px;
+}
+td:nth-child(1){
+    width: 5%;
+}
+td:nth-child(3) {
+    width:25%;
+}
+td:nth-child(2) {
+    width:70%;
+}
+td {
+    word-wrap: break-word;
+}
+.lead {
+    margin: 0;
+}
+
+.list-group-item {
+    padding: 2px 15px;
+}
+
+.todoEdit {
+    display: none;
+}
+
+.table-hover, .form-control{
+    margin: 0;
+}
+
+.list-group-item {
+    padding-top: 0;
+}
+
+.pull-right {
+    display: none;
+}
+
+.pull-right > form {
+    display: inline;
+}
+
+/* .edit-item-form {
+	display:none;
+}
+
+
+
+li:hover .pull-right{
+    opacity: 1;
+}
+
+table{
+    border-collapse: collapse;
+}
+.todoText {
+    width: 100%;
+    padding-left: 7px;
+}
+
+.deleteBox {
+    padding-left: 20px;
+} */

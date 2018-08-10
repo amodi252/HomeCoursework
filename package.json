@@ -1,0 +1,20 @@
+{
+  "name": "ToDo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ian",
+  "license": "ISC",
+  "dependencies": {
+    "@material/textfield": "^0.38.0",
+    "body-parser": "^1.14.1",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "express-sanitizer": "^1.0.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.2.5"
+  }
+}
