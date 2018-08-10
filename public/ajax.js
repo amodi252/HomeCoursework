@@ -1,5 +1,6 @@
 $('#new-todo-form').submit(function(e){
 	e.preventDefault();
+	$('#new-todo-form input').val($('#new-todo-form .lead').text())
 	var todoItem = $(this).serialize();
 	$.post('/todos', todoItem, function(data){
 		$('#todo-list').append(
