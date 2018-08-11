@@ -30,7 +30,7 @@ app.get("/todos", function(req, res){
         if(req.xhr){
             res.json(todos);
         } else {
-            res.render("index", {todos: todos});
+            res.render("todos", {todos: todos});
         }
     }
   })

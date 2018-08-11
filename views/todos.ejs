@@ -1,7 +1,7 @@
 <% include partials/header %>
 
-	<div class="row">
-		<div class="col-md-6 col-md-offset-3">
+	<div class="container-fluid row">
+		<div class="">
 			<!-- <h1>New Item</h1>
 
 			<form action="/todos" method="POST" id="new-todo-form">
@@ -22,10 +22,10 @@
 									<td><input type="checkbox"></td>
 									<td class="textTd">
 										<div contenteditable="true" class="lead"><%= todo.text %></div>
-										<div class="pull-right">
-											<form class="edit-item-form" action="/todos/<%=todo._id%>" method="POST">
-												<input type="hidden" name="todo[text]" value="">
-												<button id="updateBtn" class="btn btn-sm btn-warning edit-button">Edit</button>
+										<div class="selector pull-right">
+											<form class="chosenForm edit-item-form" action="/todos/<%=todo._id%>" method="POST">
+												<input required="true" type="hidden" name="todo[text]" value="<%= todo.text %>">
+												<button class="btn btn-sm btn-warning edit-button">Edit</button>
 											</form>
 											<form class="delete-item-form" method="POST" action="/todos/<%=todo._id%>">
 												<button type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -42,17 +42,17 @@
 						<tr>
 							<td><span class="glyphicon glyphicon-plus"></span></td>
 							<td class="textTd">
-								<form action="/todos" method="POST" id="new-todo-form">
-									<div class="form-group">
-										<h1>Add a new todo!</h1>
-										<div contenteditable="true" class="lead"></div>
-										<input type="hidden" name="todo[text]" class="outofsight" id="new-item">
-									</div>
-									<button class="btn btn-primary">Create Item</button>
-								</form>
+								<h3>Add a new todo!</h3>
+								<div id="new" contenteditable="true" class="lead"></div>
+								<div class="selector">
+									<form class="chosenForm" action="/todos" method="POST" id="new-todo-form">
+										<div class="form-group">
+											<input required type="hidden" name="todo[text]" class="outofsight" id="new-item">
+										</div>
+										<button class="btn btn-primary">Create Item</button>
+									</form>
+								</div>
 							</td>
-							<!-- <td class="third">
-							</td> -->
 						</tr>
 					</table>
 				</li>

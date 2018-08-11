@@ -5,7 +5,7 @@ body {
 table {
     border-collapse: collapse;
     table-layout: fixed;
-    width: 688px;
+    width: auto 0;
 }
 td:nth-child(1){
     width: 5%;
@@ -31,7 +31,7 @@ td {
     display: none;
 }
 
-.table-hover, .form-control{
+.table-hover {
     margin: 0;
 }
 
@@ -40,6 +40,7 @@ td {
 }
 
 .pull-right {
+    padding-top: 5px;
     display: none;
 }
 
@@ -47,24 +48,16 @@ td {
     display: inline;
 }
 
-/* .edit-item-form {
-	display:none;
+#new{
+    width:100%;
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    background-color: white;
+    background-color: -moz-field;
+    border: 1px solid darkgray;
+    box-shadow: 1px 1px 1px 0 lightgray inset;
+    /* font: -moz-field;
+    font: -webkit-small-control; */
+    margin-top: 5px;
+    padding: 2px 3px;
 }
-
-
-
-li:hover .pull-right{
-    opacity: 1;
-}
-
-table{
-    border-collapse: collapse;
-}
-.todoText {
-    width: 100%;
-    padding-left: 7px;
-}
-
-.deleteBox {
-    padding-left: 20px;
-} */

@@ -1,6 +1,9 @@
 $('#new-todo-form').submit(function(e){
 	e.preventDefault();
-	$('#new-todo-form input').val($('#new-todo-form .lead').text())
+	newTodoText = $('#new').text();;
+	$('#new').focus().text('');
+	if (newTodoText === '') return;
+	$('#new-todo-form input').val(newTodoText)
 	var todoItem = $(this).serialize();
 	$.post('/todos', todoItem, function(data){
 		$('#todo-list').append(
@@ -13,6 +16,7 @@ $('#new-todo-form').submit(function(e){
 							<div contenteditable="true" class="lead">${data.text}</div>
 							<div class="pull-right">
 								<form class="edit-item-form" action="/todos/${data._id}" method="POST">
+									<input required="true" type="hidden" name="todo[text]" value="${data.text}">
 									<button id="updateBtn" class="btn btn-sm btn-warning edit-button">Edit</button>
 								</form>
 								<form class="delete-item-form" method="POST" action="/todos/${data._id}">
@@ -25,25 +29,24 @@ $('#new-todo-form').submit(function(e){
 			</li>
 			`
 		);
-		$('#new-todo-form .form-control').val('').focus();
 	});
 });
 
 $('#todo-list').on('click','.textTd', function(){
 	$(this).children('.pull-right').show();
-	$(this).children('.lead').attr('contenteditable','true');
-	$(this).children('.lead').focus();
+	$(this).children('.lead').attr('contenteditable','true').focus();
 });
 
 $('#todo-list').on('submit','.edit-item-form', function(e){
-	console.log("I'M TRIGGERED 1");
 	e.preventDefault();
-    var value = $(this).parent().siblings('.lead').text();
-	// var input = $("<input />", { 'name' : "todo[text]",
-    //                                   'value' : value ,
-    //                                   'type' : "hidden" });
-    // $(this).append(input);
-	$('.edit-item-form input').val(value);
+	$leadItem = $(this).parent().hide().siblings('.lead').blur();
+	$inputItem = $(this).children('input');
+
+	if ($leadItem.text() === $inputItem.val()) {
+		return;
+	}
+
+	$inputItem.val($leadItem.text());
 	var todoItem = $(this).serialize();
 	var actionUrl = $(this).attr('action');
 	$originalItem = $(this).parent('.list-group-item');
@@ -78,8 +81,7 @@ $('#todo-list').on('submit','.edit-item-form', function(e){
 		// 	)
 		// }
 	});
-	$(this).parent().toggle();
-	$(this).parent().siblings('.lead').blur()
+
 });
 
 $('#todo-list').on('submit', '.delete-item-form', function(e) {
@@ -100,3 +102,46 @@ $('#todo-list').on('submit', '.delete-item-form', function(e) {
    	$(this).find('button').blur();
    }
 });
+
+//keybindings
+$('.list-group').keypress(function (e) {
+    if ((e.ctrlKey || e.metaKey) && (e.keyCode === 13 || e.keyCode === 10)) {
+        $(e.target).siblings('.selector').children('.chosenForm').submit();
+
+	  	  $('.pull-right:visible').each(function() {
+	  		  $(this).children('.chosenForm').submit();
+	  	  });
+    }
+});
+
+$(document).keyup(function(e) {
+  if (e.keyCode === 27) {
+	  $('.pull-right:visible').each(function() {
+		  $(this).toggle().siblings('.lead').text($(this).children('.chosenForm').children('input').val());
+	  });
+  }
+});
+
+$('#todo-list').on('keydown', '.lead', function(e){
+	if (e.which === 9) {
+		$(e.target).siblings('.pull-right').children('.chosenForm').submit()
+		var $next = $(e.target).closest('.list-group-item').next('.list-group-item').find('.lead').click().get(0);
+
+		if (typeof $next === "undefined") return;
+		setCursorToEnd($next);
+	} else if ((e.ctrlKey || e.metaKey) && (e.keyCode === 46)) {
+		$(e.target).siblings('.pull-right').children('.delete-item-form').submit()
+	}
+});
+
+
+function setCursorToEnd(ele)
+  {
+    var range = document.createRange();
+    var sel = window.getSelection();
+    range.setStart(ele, 1);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    ele.focus();
+  }
