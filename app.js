@@ -36,8 +36,12 @@ app.get("/todos", function(req, res){
 
 app.get("/motivate", function(req, res){
     //getBatch();
-    console.log(getBatch());
-    res.render("motivate", {allImages:getBatch()});
+    // console.log("in 1")
+    // getBatch (function(allImages) {
+    //     console.log(allImages);
+        res.render("motivate");
+    // });
+    //console.log()
 });
 
 app.get("/", function(req, res){
@@ -93,22 +97,28 @@ app.delete("/todos/:id", function(req, res){
  });
 });
 
-function getBatch () {
-    wtj.extractData('https://quotescover.com/category/quotes-gallery/page/550', {
-      fields: ['data'],
-      parse: function($) {
-        return {
-          imgs: $(".entry-image").map(function(val) {
-              return $(this).find('img').attr('src')
-          }).get()
-        }
-      }
-    }).then(function(res) {
-      return JSON.parse(JSON.stringify(res, null, 2));
-      // console.log(Object.prototype.toString.call(res));
-      // console.log("fhdhdfg " + JSON.parse(res)[0].sub);
-      // return JSON.parse(res);
-    })
+// var arr = [];
+// getBatch();
+function getBatch (callback) {
+    // wtj.extractData('https://quotescover.com/category/quotes-gallery/page/550', {
+    //   fields: ['data'],
+    //   parse: function($) {
+    //     return {
+    //       imgs: $(".entry-image").map(function(val) {
+    //           return $(this).find('img').attr('src')
+    //       }).get()
+    //     }
+    //   }
+    // }).then(function(res) {
+    //   // console.log(Object.prototype.toString.call(res));
+    //   // console.log("fhdhdfg " + JSON.parse(res)[0].sub);
+    //   // return JSON.parse(res);
+    //   // console.log(res.data.imgs);
+    //   // console.log("Only: " + res.data.imgs[0]);
+    //     console.log("in 2");
+    //     //callback();
+    //     callback(res.data.imgs);
+    // })
 }
 
 app.listen(3000, function(){
