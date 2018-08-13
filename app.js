@@ -1,9 +1,11 @@
-var express = require("express"),
-app     = express(),
-mongoose = require("mongoose"),
-bodyParser = require("body-parser"),
-expressSanitizer = require("express-sanitizer"),
-methodOverride = require('method-override');
+var express     = require("express"),
+    app         = express(),
+    mongoose    = require("mongoose"),
+    bodyParser  = require("body-parser"),
+    wtj         = require("website-to-json"),
+    expressSanitizer    = require("express-sanitizer"),
+    methodOverride      = require('method-override');
+
 
 mongoose.connect('mongodb://localhost:27017/todo_app', { useNewUrlParser: true });
 app.use(express.static('public'));
@@ -17,10 +19,6 @@ var todoSchema = new mongoose.Schema({
 });
 
 var Todo = mongoose.model("Todo", todoSchema);
-
-app.get("/", function(req, res){
-  res.redirect("/todos");
-});
 
 app.get("/todos", function(req, res){
   Todo.find({}, function(err, todos){
@@ -36,8 +34,14 @@ app.get("/todos", function(req, res){
   })
 });
 
-app.get("/todos/new", function(req, res){
- res.render("new");
+app.get("/motivate", function(req, res){
+    //getBatch();
+    console.log(getBatch());
+    res.render("motivate", {allImages:getBatch()});
+});
+
+app.get("/", function(req, res){
+  res.redirect("/todos");
 });
 
 app.post("/todos", function(req, res){
@@ -89,7 +93,24 @@ app.delete("/todos/:id", function(req, res){
  });
 });
 
+function getBatch () {
+    wtj.extractData('https://quotescover.com/category/quotes-gallery/page/550', {
+      fields: ['data'],
+      parse: function($) {
+        return {
+          imgs: $(".entry-image").map(function(val) {
+              return $(this).find('img').attr('src')
+          }).get()
+        }
+      }
+    }).then(function(res) {
+      return JSON.parse(JSON.stringify(res, null, 2));
+      // console.log(Object.prototype.toString.call(res));
+      // console.log("fhdhdfg " + JSON.parse(res)[0].sub);
+      // return JSON.parse(res);
+    })
+}
 
-app.listen(3000, function() {
-  console.log('Server running on port 3000');
+app.listen(3000, function(){
+    console.log("Server started on port 3000")
 });

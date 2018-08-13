@@ -123,7 +123,10 @@ $(document).keyup(function(e) {
 });
 
 $('#todo-list').on('keydown', '.lead', function(e){
+	console.log(e.which);
 	if (e.which === 9) {
+		e.preventDefault();
+		console.log("I'm in")
 		$(e.target).siblings('.pull-right').children('.chosenForm').submit()
 		var $next = $(e.target).closest('.list-group-item').next('.list-group-item').find('.lead').click().get(0);
 
@@ -135,8 +138,7 @@ $('#todo-list').on('keydown', '.lead', function(e){
 });
 
 
-function setCursorToEnd(ele)
-  {
+function setCursorToEnd(ele) {
     var range = document.createRange();
     var sel = window.getSelection();
     range.setStart(ele, 1);
